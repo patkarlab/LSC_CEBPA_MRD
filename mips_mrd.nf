@@ -20,7 +20,7 @@ process trimming {
 	"""	
 	#/home/programs/ea-utils/clipper/fastq-mcf -o ${Sample}.R1.trimmed.fastq -o ${Sample}.R2.trimmed.fastq -l 53 -k 0 -q 0 /home/diagnostics/pipelines/smMIPS_pipeline/code/functions/preprocess_reads_miseq/smmip_adaptors.fa ${params.sequences}/${Sample}_S*_R1_*.fastq.gz  ${params.sequences}/${Sample}_S*_R2_*.fastq.gz
 	trimmomatic PE \
-	${params.sequences}/${Sample}_*R1*.fastq.gz ${params.sequences}/${Sample}_*R2*.fastq.gz \
+	${params.sequences}/${Sample}_*R1.fastq.gz ${params.sequences}/${Sample}_*R2.fastq.gz \
 	-baseout ${Sample}.fq.gz \
 	ILLUMINACLIP:${params.adaptors}:2:30:10:2:keepBothReads \
 	ILLUMINACLIP:${params.nextera_adapters}:2:30:10:2:keepBothReads \
