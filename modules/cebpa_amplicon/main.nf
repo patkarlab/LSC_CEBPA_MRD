@@ -318,11 +318,11 @@ process ERROR_CORRECTN {
 	label 'process_single'
 	publishDir "${params.outdir}/${Sample}/", mode: 'copy'
 	input:	
-		tuple val (Sample), path (uncollapsed_excel), path (collapsed_excel)
+		tuple val (Sample), path (collapsed_excel)
 	output:
 		tuple val (Sample), path ("${Sample}_ErrorCorrected.xlsx")
 	script:
 	"""
-	amplicon_background_error.py --input_uncollapsed_excel ${uncollapsed_excel} --input_collapsed_excel ${collapsed_excel} --output_excel ${Sample}_ErrorCorrected.xlsx
+	background_error.py --input_collapsed_excel ${collapsed_excel} --output_excel ${Sample}_ErrorCorrected.xlsx
 	"""		
 }
