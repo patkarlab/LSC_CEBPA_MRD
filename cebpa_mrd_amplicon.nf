@@ -71,26 +71,26 @@ workflow CEBPA_MRD {
 		COVERAGE_UNCOLL(SORT_INDEX.out, bedfile, uncollapsed)
 
 		MUTECT2_COLL(SORT_INDEX_CONS.out, bedfile, genome_file, DICT_GEN.out, index_files, collapsed)
-		//MUTECT2_UNCOLL(SORT_INDEX.out, bedfile, genome_file, DICT_GEN.out, index_files, uncollapsed)
+		MUTECT2_UNCOLL(SORT_INDEX.out, bedfile, genome_file, DICT_GEN.out, index_files, uncollapsed)
 
 		VARDICT_COLL(SORT_INDEX_CONS.out, bedfile, genome_file, DICT_GEN.out, index_files, collapsed)
-		//VARDICT_UNCOLL(SORT_INDEX.out, bedfile, genome_file, DICT_GEN.out, index_files, uncollapsed)
+		VARDICT_UNCOLL(SORT_INDEX.out, bedfile, genome_file, DICT_GEN.out, index_files, uncollapsed)
 
 		MPILEUP_COLL(SORT_INDEX_CONS.out, bedfile, genome_file, DICT_GEN.out, index_files, collapsed)
 		VARSCAN_COLL(SORT_INDEX_CONS.out.join(MPILEUP_COLL.out), bedfile, genome_file, DICT_GEN.out, index_files, collapsed)
-		//MPILEUP_UNCOLL(SORT_INDEX.out, bedfile, genome_file, DICT_GEN.out, index_files, uncollapsed)
-		//VARSCAN_UNCOLL(SORT_INDEX.out.join(MPILEUP_UNCOLL.out), bedfile, genome_file, DICT_GEN.out, index_files, uncollapsed)
+		MPILEUP_UNCOLL(SORT_INDEX.out, bedfile, genome_file, DICT_GEN.out, index_files, uncollapsed)
+		VARSCAN_UNCOLL(SORT_INDEX.out.join(MPILEUP_UNCOLL.out), bedfile, genome_file, DICT_GEN.out, index_files, uncollapsed)
 
 		ANNOVAR_COLL_MUTECT2(MUTECT2_COLL.out, mutect2)
 		ANNOVAR_COLL_VARDICT(VARDICT_COLL.out, vardict)
 		ANNOVAR_COLL_VARSCAN(VARSCAN_COLL.out, varscan)
 
-		//ANNOVAR_UNCOLL_MUTECT2(MUTECT2_UNCOLL.out, mutect2)
-		//ANNOVAR_UNCOLL_VARDICT(VARDICT_UNCOLL.out, vardict)
-		//ANNOVAR_UNCOLL_VARSCAN(VARSCAN_UNCOLL.out, varscan)
+		ANNOVAR_UNCOLL_MUTECT2(MUTECT2_UNCOLL.out, mutect2)
+		ANNOVAR_UNCOLL_VARDICT(VARDICT_UNCOLL.out, vardict)
+		ANNOVAR_UNCOLL_VARSCAN(VARSCAN_UNCOLL.out, varscan)
 
 		COMBINE_CALLERS_COLL(ANNOVAR_COLL_MUTECT2.out.join(ANNOVAR_COLL_VARDICT.out.join(ANNOVAR_COLL_VARSCAN.out.join(COVERAGE_COLL.out))), collapsed)
-		//COMBINE_CALLERS_UNCOLL(ANNOVAR_UNCOLL_MUTECT2.out.join(ANNOVAR_UNCOLL_VARDICT.out.join(ANNOVAR_UNCOLL_VARSCAN.out.join(COVERAGE_UNCOLL.out))), uncollapsed)
+		COMBINE_CALLERS_UNCOLL(ANNOVAR_UNCOLL_MUTECT2.out.join(ANNOVAR_UNCOLL_VARDICT.out.join(ANNOVAR_UNCOLL_VARSCAN.out.join(COVERAGE_UNCOLL.out))), uncollapsed)
 
 		ERROR_CORRECTN(COMBINE_CALLERS_COLL.out)
 		
