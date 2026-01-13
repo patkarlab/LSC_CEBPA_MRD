@@ -62,7 +62,7 @@ def BackgroundRate(args):
 	mrd_status = "MRD_STATUS"
 	background_column = "BACKGROUND + 3SD"
 	lvaf = "LVAF%"
-	min_INDEL_length = 3
+	min_INDEL_length = 2 # The original value as per the paper was 3
 	vartype = "variant_type"
 
 	df = pd.read_excel(infile, sheet_name=None)

@@ -4,6 +4,7 @@ nextflow.enable.dsl=2
 
 genome_file = file("${params.genome}", checkIfExists: true)
 index_files = file("${params.genome_dir}/${params.ind_files}.*")
+fai_index_file = file("${params.genome_dir}/${params.ind_files}.fai")
 bedfile = file("${params.bedfile}", checkIfExists: true)
 truseq_adapters = file("${params.truseq_adapters}", checkIfExists: true)
 nextera_adapters = file("${params.nextera_adapters}", checkIfExists: true)
@@ -25,7 +26,7 @@ include { CALLMOLCONSREADS } from './modules/fgbio/callmolecularconsensus/main.n
 include { FILTERCONSBAM } from './modules/fgbio/fiterconsbam/main.nf'
 include { ADDGROUPS } from './modules/gatk/addreplacegroups/main.nf'
 include { COVERAGE as COVERAGE_COLL; COVERAGE as COVERAGE_UNCOLL } from './modules/bedtools/coverage/main.nf'
-include { MUTECT2 as MUTECT2_COLL; MUTECT2 as MUTECT2_UNCOLL; DICT_GEN } from './modules/gatk/mutect2/main.nf'
+include { MUTECT2_COLL; MUTECT2_UNCOLL; DICT_GEN } from './modules/gatk/mutect2/main.nf'
 include { VARDICT as VARDICT_COLL; VARDICT as VARDICT_UNCOLL} from './modules/vardict/variantcall/main.nf'
 include { MPILEUP as MPILEUP_COLL; MPILEUP as MPILEUP_UNCOLL } from './modules/samtools/mpileup/main.nf'
 include { VARSCAN as VARSCAN_COLL; VARSCAN as VARSCAN_UNCOLL } from './modules/varscan/variantcall/main.nf'
@@ -67,8 +68,8 @@ workflow CEBPA_MRD {
 		ADDGROUPS(FILTERCONSBAM.out)
 		SORT_INDEX_CONS(ADDGROUPS.out)
 
-		COVERAGE_COLL(SORT_INDEX_CONS.out, bedfile, collapsed)
-		COVERAGE_UNCOLL(SORT_INDEX.out, bedfile, uncollapsed)
+		COVERAGE_COLL(SORT_INDEX_CONS.out, fai_index_file, bedfile, collapsed)
+		COVERAGE_UNCOLL(SORT_INDEX.out, fai_index_file, bedfile, uncollapsed)
 
 		MUTECT2_COLL(SORT_INDEX_CONS.out, bedfile, genome_file, DICT_GEN.out, index_files, collapsed)
 		MUTECT2_UNCOLL(SORT_INDEX.out, bedfile, genome_file, DICT_GEN.out, index_files, uncollapsed)
@@ -93,7 +94,6 @@ workflow CEBPA_MRD {
 		COMBINE_CALLERS_UNCOLL(ANNOVAR_UNCOLL_MUTECT2.out.join(ANNOVAR_UNCOLL_VARDICT.out.join(ANNOVAR_UNCOLL_VARSCAN.out.join(COVERAGE_UNCOLL.out))), uncollapsed)
 
 		ERROR_CORRECTN(COMBINE_CALLERS_COLL.out)
-		
 }
 
 workflow.onComplete {

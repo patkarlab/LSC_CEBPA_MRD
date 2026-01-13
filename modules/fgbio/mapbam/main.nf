@@ -1,6 +1,6 @@
 process MAPBAM {
 	tag "${Sample}"
-	label 'process_medium'	
+	label 'process_low'	
 	input:
 		tuple val (Sample), file(unmapped_bam)
 		path (GenFile)
@@ -16,7 +16,7 @@ process MAPBAM {
 
 process MAPBAM_CONS {
 	tag "${Sample}"
-	label 'process_medium'
+	label 'process_low'
 	input:
 		tuple val(Sample), path(unmapped_bam)
 		path (GenFile)

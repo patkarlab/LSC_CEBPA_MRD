@@ -7,6 +7,6 @@ process ADDGROUPS {
 		tuple val (Sample), path("${Sample}_filt.bam")
 	script:
 	"""
-	gatk AddOrReplaceReadGroups I=${cons_mapped_bam} O=${Sample}_filt.bam RGID=AML RGLB=LIB-MIPS RGPU=UNIT_1 RGPL=ILLUMINA RGSM=${Sample}
+	gatk --java-options "-Xmx${task.memory.toGiga()}g" AddOrReplaceReadGroups I=${cons_mapped_bam} O=${Sample}_filt.bam RGID=AML RGLB=LIB-MIPS RGPU=UNIT_1 RGPL=ILLUMINA RGSM=${Sample}
 	"""
 }

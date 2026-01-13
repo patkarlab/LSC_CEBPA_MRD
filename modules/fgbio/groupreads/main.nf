@@ -8,6 +8,6 @@ process GROUPREADSBYUMI {
 		tuple val (Sample), file("${Sample}.tag-family-sizes.txt"), emit : family_sizes
 	script:
 	"""
-	fgbio -Xmx${task.memory.toGiga()}g --async-io --compression 1 GroupReadsByUmi --input ${mapped_bam} --strategy Adjacency --edits 1 --output ${Sample}.grouped.bam --family-size-histogram ${Sample}.tag-family-sizes.txt
+	fgbio -Xmx${task.memory.toGiga()}g --async-io --compression 1 GroupReadsByUmi --input ${mapped_bam} --strategy Adjacency --edits 1 -@ ${task.cpus} --output ${Sample}.grouped.bam --family-size-histogram ${Sample}.tag-family-sizes.txt
 	"""
 }
