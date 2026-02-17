@@ -1,54 +1,33 @@
-# MIPS pipeline
+# LSC CEBPA MRD workflow description
 
-## Description
-This is a nextflow pipeline for analysing data for MIPS-MRD. It follows the fgbio pipeline (https://github.com/fulcrumgenomics/fgbio) to obtain mapped consensus bam file. 
+This repository describes the workflow for analysing MRD samples sequenced using single gene amplicon based assay for CEBPA. 
 
-For running this pipeline, following programs need to be installed and their complete paths need to be added in the params section of the `nextflow.config`.
+## Usage
+The following parameters need to be modified in the `params` section of the `nextflow.config` before executing the workflow :
+- *genome* = Complete path to the human genome fasta file(hg19_all.fasta). Please ensure that the BWA index files (hg19_all.fasta.fai, hg19_all.fasta.amb, hg19_all.fasta.ann, hg19_all.fasta.bwt, hg19_all.fasta.pac, hg19_all.fasta.sa) are also present in the same genome folder. The assests folder currently contains placeholder genome and index files.
 
-- fastqc = fastqc executable path 
-- java_path = directory containing the java executable
-- GATK38_path = path to the GenomeAnalysisTK-3.8.jar file
-- GATK42_path = path to the gatk-package-4.2.6.0-local.jar file
-- fgbio_path = ath to the fgbio-2.0.1.jar file
-- samtools = samtools executable path
-- genome = Genomic fasta file
-- site1 = known_polymorphic_sites 1 (Mills_and_1000G_gold_standard.indels)
-- PosControlScript = Custom script for generating Synthetic Fastq with 4% npm1 VAF
-- fastq_bam = Custom script for generating bam from fastq with bwa
-- abra2_path = directory containing the abra jar file
-- pear_path = pear executable path 
-- bedtools = bedtools executable path
-- mosdepth
-- picard_path = path to the picard.jar file
-- get_itd_path = path to the folder containing getitd.py
-- VarDict
-- varscan_path = path to the VarScan.v2.3.9.jar file
-- annovarLatest_path = path to the folder containing ANNOVAT perl scripts
-- bcftools_path = bcftools executable path 
-- somaticseq
+- *annovar_humandb* = Complete path to the humandb database folder for [ANNOVAR](https://annovar.openbioinformatics.org/en/latest/user-guide/startup/ "annovar site")
 
-## Usage:
+- *gen_ref*     = Complete path to the gene_fullxref.txt file as downloaded from the [ANNOVAR](https://annovar.openbioinformatics.org/en/latest/user-guide/startup/ "annovar site") site
 
-1. Keep the `fastq` files into the `sequences/` folder.
+- *bedfile* = This file contains the coordinates of the amplicons used for this assay
 
-2. Change the `samplesheet.csv`. It should have a list of IDs of the samples. 
+- *outdir* = Location to write the output folder
 
-3.  Run the following script.
+## Running the pipeline
+1. Transfer the sample input files `*.fastq.gz` inside the `sequences/` folder.
 
+2. Modify the `samplesheet.csv`. The sample_ids, without the file extension, should be mentioned in samplesheet in the following format - <br>
+sample1
+sample2
+sample3
+Please check for empty lines in the samplesheet before running the pipeline.
+
+3. To execute the pipeline, use the following command
+```bash
+nextflow run cebpa_mrd_amplicon.nf -entry CEBPA_MRD -profile docker -resume -bg
 ```
-./run_nextflow.sh > script.log
-```
-This script contains the nextflow command used to execute the workflow.
 
-```
-source activate new_base
+## Output
+Samplewise output folders are written to the folder name mentioned in the `outdir` param in the config file.
 
-nextflow -c /home/pipelines/Consensus_pipeline_with_espresso/nextflow.config run mips_mrd.nf -entry MRD \
---bedfile /home/pipelines/Consensus_pipeline_with_espresso/bedfiles/mips_mrd_bal210125_sortd \
---bedfile2 /home/pipelines/Consensus_pipeline_with_espresso/bedfiles/mips_mrd_bal11March_exon_sortd \
---sequences /home/pipelines/Consensus_pipeline_with_espresso/sequences/ \
---input /home/pipelines/Consensus_pipeline_with_espresso/samplesheet.csv \
--resume -bg
-
-conda deactivate
-```
