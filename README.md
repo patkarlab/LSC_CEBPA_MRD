@@ -1,6 +1,6 @@
 # LSC CEBPA MRD workflow description
 
-This repository describes the workflow for analysing MRD samples sequenced using single gene amplicon based assay for CEBPA. 
+This repository describes the workflow for analysing MRD samples sequenced using single gene amplicon based assay for CEBPA. Background error calculation as mentioned in [article](https://doi.org/10.1182/blood-2018-02-829911) can be found in error_model.md 
 
 ## Usage
 The following parameters need to be modified in the `params` section of the `nextflow.config` before executing the workflow :
