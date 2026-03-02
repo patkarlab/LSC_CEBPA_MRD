@@ -6,3 +6,4 @@ Final_Output*
 .nextflow/
 .nextflow.pid
 *.log
+!sequences/sample_*.fastq.gz
