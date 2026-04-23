@@ -1,3 +1,9 @@
+# Generation of Error model using mean background error
+Calculation of mean background error in this study was done as described in Thol F et. al. Blood (2018) 132 (16): 1703–1713.
+[PMID: 30190321](https://doi.org/10.1182/blood-2018-02-829911 "doi link")
+
+## Steps for generating the background error rate
+
 1. Median calculation across callers
 
     - For each variant, median REF count, ALT count and VAF% are calculated across the three callers.
@@ -24,3 +30,5 @@
     - Background + 3 × SD
     - Variants exceeding this threshold are labelled PASS; others are labelled FAIL.
     - Large indels are labelled NA.
+
+Thresholds are defined as described in the supplementary methods of the [article](https://doi.org/10.1182/blood-2018-02-829911 "doi link").

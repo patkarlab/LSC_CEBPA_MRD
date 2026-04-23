@@ -1,11 +1,21 @@
 # LSC CEBPA MRD workflow description
 
+## Table of Contents
+
+1. [Introduction](#introduction)
+2. [Pipeline summary](#pipeline-summary)
+3. [Pipeline structure](#pipeline-structure)
+4. [References](#requirements)
+5. [Usage](#usage)
+6. [Output](#output)
+7. [Citation](#citation)
+8. [Contact](#contact)
+
 ## Introduction
 
-&emsp;This repository describes the bioinformatics workflow for analysing MRD samples sequenced using a single gene amplicon based assay for **CEBPA**. Sample libraries were sequenced on a NextSeq platform using 2x150 bp reads. 
+&emsp;This repository describes the bioinformatics workflow for analysing MRD samples sequenced using a single gene amplicon based assay for **CEBPA**. The CEBPA gene was amplified using a limited cycle PCR strategy using 8 pairs of primers, followed by a second round of index PCR. Each forward primer has an 8 bp UMI tag to enable consensus read generation. Sample libraries were sequenced on a NextSeq platform using 2x150 bp reads.
 
-
-&emsp;Reads are preprocessed to remove adapters and low quality bases, followed by alignment to the human genome (build hg19). Reads originating from the same UMI family were collapsed to obtain consensus reads using the fgbio tools (https://github.com/fulcrumgenomics/fgbio) .  Variant calling is performed using multiple callers and results are combined and annotated. A site and mutation-specific background error model is applied to distinguish true variants from sequencing noise. Detailed steps to generate the error model are described in the `error_model.md`
+&emsp;Reads are preprocessed to remove adapters and low quality bases, followed by alignment to the human genome (build hg19). Reads originating from the same UMI family were collapsed to obtain consensus reads using the fgbio tools (https://github.com/fulcrumgenomics/fgbio) .  Variant calling is performed using multiple callers and results are combined and annotated. Error model using mean background error is applied to determine MRD thresholds and distinguish true variants from sequencing noise. Detailed steps to generate mean background error model are described in [error_model.md](error_model.md).
 
 ---
 ## Pipeline summary
