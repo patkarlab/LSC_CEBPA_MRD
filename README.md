@@ -1,5 +1,7 @@
 # LSC CEBPA MRD workflow description
 
+## Detection of mutations in CEBPA using amplicon based sequencing assay 
+
 ## Table of Contents
 
 1. [Introduction](#introduction)
