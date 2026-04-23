@@ -44,33 +44,15 @@ flowchart LR
 	(Uncollapsed)"]
 
 	%% Variant Calling - Collapsed
-	M --> P["Mutect2
-	(Collapsed)"]
-	M --> Q["VarDict
-	(Collapsed)"]
-	M --> R["Mpileup
-	(Collapsed)"]
-	R --> S["VarScan
-	(Collapsed)"]
+	M --> S["Variant Calling \n (Collapsed) \n Mutect2, VarDict \n VarScan"]
 
 	%% Variant Calling - Uncollapsed
-	F --> T["Mutect2
-	(Uncollapsed)"]
-	F --> U["VarDict
-	(Uncollapsed)"]
-	F --> V["Mpileup
-	(Uncollapsed)"]
-	V --> W["VarScan
-	(Uncollapsed)"]
+	F --> T["Variant Calling \n (Uncollapsed) \n Mutect2, VarDict \n VarScan"]
 
 	%% Annotation
-	P --> X["ANNOVAR"]
-	Q --> X
-	S --> X
-
+	S --> X["ANNOVAR"]
+	
 	T --> Y["ANNOVAR"]
-	U --> Y
-	W --> Y
 
 	%% Combine
 	X --> Z["Combine Callers
